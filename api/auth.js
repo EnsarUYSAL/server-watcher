@@ -4,10 +4,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('./models/user');
 
+// Secret key
+const validSecretKey = process.env.AUTH_SECRET_KEY;
+
 // Register a new user
 router.post('/register', async (req, res) => {
-  const secretKey = req.headers['x-secret-key']; // Secret key'i header'dan al
-  const validSecretKey = 'benensar';
+  const secretKey = req.headers['x-secret-key'];
   if (secretKey !== validSecretKey) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -40,7 +42,6 @@ router.post('/login', async (req, res) => {
 // Get all users
 router.get('/users', async (req, res) => {
   const secretKey = req.headers['x-secret-key'];
-  const validSecretKey = 'benensar';
   if (secretKey !== validSecretKey) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -55,7 +56,6 @@ router.get('/users', async (req, res) => {
 // Delete a user
 router.delete('/users/:id', async (req, res) => {
   const secretKey = req.headers['x-secret-key'];
-  const validSecretKey = 'benensar';
   if (secretKey !== validSecretKey) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
