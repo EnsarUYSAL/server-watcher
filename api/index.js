@@ -2,9 +2,11 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
-const authRoutes = require('./auth');
+const authRoutes = require('./router/auth');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./docs/swagger.json');
+const publicKeyRoutes = require('./router/privateKeyService');
+const serverRoutes = require('./router/serverService');
 
    
 const app = express();
@@ -15,7 +17,9 @@ app.use(express.json());
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/keys', publicKeyRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/servers', serverRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {

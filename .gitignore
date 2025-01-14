@@ -3,4 +3,6 @@
 /RFC/*
 PRD.md
 FEATURES.md
-.cursorrules
+.cursorrules*
+.gitignore*
+postman_collection.json

@@ -2,10 +2,22 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('./models/user');
+const User = require('../models/user');
 
 // Secret key
 const validSecretKey = process.env.AUTH_SECRET_KEY;
+
+// Middleware for JWT validation
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    if (err) return res.status(403).json({ error: 'Forbidden' });
+    req.user = user;
+    next();
+  });
+};
 
 // Register a new user
 router.post('/register', async (req, res) => {
@@ -40,7 +52,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Get all users
-router.get('/users', async (req, res) => {
+router.get('/users', authenticateToken, async (req, res) => {
   const secretKey = req.headers['x-secret-key'];
   if (secretKey !== validSecretKey) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -54,7 +66,7 @@ router.get('/users', async (req, res) => {
 });
 
 // Delete a user
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', authenticateToken, async (req, res) => {
   const secretKey = req.headers['x-secret-key'];
   if (secretKey !== validSecretKey) {
     return res.status(401).json({ error: 'Unauthorized' });

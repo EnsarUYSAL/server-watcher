@@ -5,8 +5,8 @@
     "title": "Server Monitoring API",
     "description": "API documentation for the Server Monitoring Application"
   },
-  "host": "localhost:3000",
-  "basePath": "/api",
+  "host": "localhost:3455",
+  "basePath": "/",
   "schemes": ["http"],
   "paths": {
     "/auth/register": {
@@ -30,7 +30,9 @@
           "400": {
             "description": "Invalid input"
           }
-        }
+        },
+        "tags": ["Authentication"],
+        "security": [{ "Bearer": [] }]
       }
     },
     "/auth/login": {
@@ -54,6 +56,266 @@
           "401": {
             "description": "Unauthorized"
           }
+        },
+        "tags": ["Authentication"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/auth/users": {
+      "get": {
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users",
+        "responses": {
+          "200": {
+            "description": "A list of users"
+          },
+          "500": {
+            "description": "Failed to retrieve users"
+          }
+        },
+        "tags": ["Authentication"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/auth/users/{id}": {
+      "delete": {
+        "summary": "Delete a user",
+        "description": "Delete a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "x-secret-key",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Secret key for authorization"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to delete user"
+          }
+        },
+        "tags": ["Authentication"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/servers/add": {
+      "post": {
+        "summary": "Add a new server",
+        "description": "Add a new server to the system",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Server"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": ["Server Management"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/servers/all": {
+      "get": {
+        "summary": "Get all servers",
+        "description": "Retrieve a list of all servers",
+        "responses": {
+          "200": {
+            "description": "A list of servers"
+          },
+          "500": {
+            "description": "Failed to retrieve servers"
+          }
+        },
+        "tags": ["Server Management"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/servers/{id}": {
+      "put": {
+        "summary": "Update a server",
+        "description": "Update server details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Server ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Server"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server updated successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": ["Server Management"],
+        "security": [{ "Bearer": [] }]
+      },
+      "delete": {
+        "summary": "Delete a server",
+        "description": "Delete a server by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Server ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server deleted successfully"
+          },
+          "500": {
+            "description": "Failed to delete server"
+          }
+        },
+        "tags": ["Server Management"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/keys/add": {
+      "post": {
+        "summary": "Add a new private key",
+        "description": "Add a new private key to the system",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PrivateKey"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private key added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": ["Private Key Management"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/keys/all": {
+      "get": {
+        "summary": "Get all private keys",
+        "description": "Retrieve a list of all private keys",
+        "responses": {
+          "200": {
+            "description": "A list of private keys"
+          },
+          "500": {
+            "description": "Failed to retrieve keys"
+          }
+        },
+        "tags": ["Private Key Management"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/keys/{id}": {
+      "put": {
+        "summary": "Update a private key",
+        "description": "Update private key details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Private Key ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PrivateKey"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private key updated successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": ["Private Key Management"],
+        "security": [{ "Bearer": [] }]
+      },
+      "delete": {
+        "summary": "Delete a private key",
+        "description": "Delete a private key by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Private Key ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private key deleted successfully"
+          },
+          "500": {
+            "description": "Failed to delete key"
+          }
+        },
+        "tags": ["Private Key Management"],
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "PrivateKey": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
         }
       }
     }
@@ -83,6 +345,57 @@
           "type": "string"
         }
       }
+    },
+    "Server": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Linux", "Windows"]
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["online", "offline"]
+        }
+      }
+    },
+    "PrivateKey": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        }
+      }
     }
-  }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
 } 
