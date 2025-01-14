@@ -63,3 +63,5 @@ Katkılar memnuniyetle karşılanır! Lütfen bir pull request göndermeden önc
 ## License / Lisans
 This project is licensed under the MIT License.
 Bu proje MIT Lisansı altında lisanslanmıştır. 
+
+Ensar Uysal
